@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     list: [
@@ -17,10 +17,30 @@ const initialState = {
     error: null
 }
 
+export const fetchTraits = createAsyncThunk('app/fetchraces', async () => {
+    let { results } = await fetch('https://www.dnd5eapi.co/api/traits')
+        .then(response => response.json());
+    return { results: results };
+})
+
 const traitSlice = createSlice({
     name: 'traits',
     initialState,
-    reducers: {}
+    reducers: {},
+    extraReducers: {
+        [fetchTraits.pending]: (state, action) => {
+            state.status = 'loading'
+        },
+        [fetchTraits.fulfilled]: (state, action) => {
+            state.status = 'succeeded'
+            const { results } = action.payload
+            state.list = results
+        },
+        [fetchTraits.rejected]: (state, action) => {
+            state.status = 'failed'
+            state.error = action.error.message
+        }
+    }
 })
 
 export default traitSlice.reducer
