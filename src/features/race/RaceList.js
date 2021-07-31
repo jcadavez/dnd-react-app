@@ -1,12 +1,15 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 export const RaceList = () => {
     const races = useSelector(state => state.race.list)
 
     const renderedRaces = races.map(race => (
         <article className="race-excerpt" key={race.index}>
-            <h3>{race.name}</h3>
+            <Link to={race.url}>
+                <h3>{race.name}</h3>
+            </Link>
         </article>
     ))
     

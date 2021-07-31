@@ -33,7 +33,13 @@ const raceSlice = createSlice({
         },
         [fetchRaces.fulfilled]: (state, action) => {
             state.status = 'succeeded'
-            const { results } = action.payload
+            let { results } = action.payload
+            results = results.map(result => {
+                const url = result.url.split("/");
+                const newUrl = `${url[2]}/${url[3]}`
+                result.url = newUrl
+                return result
+            })
             state.list = results
         },
         [fetchRaces.rejected]: (state, action) => {
