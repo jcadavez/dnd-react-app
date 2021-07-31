@@ -1,24 +1,36 @@
-import logo from './logo.svg';
+import React from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect
+} from 'react-router-dom'
+
 import './App.css';
+
+import { ClassList } from './features/class/ClassList'
+import { RaceList } from './features/race/RaceList'
+import { TraitList } from './features/trait/TraitList'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="App">
+        <Switch>
+          <Route 
+            exact
+            path="/"
+            render={() => (
+              <React.Fragment>
+                <ClassList />
+                <RaceList />
+                <TraitList />
+              </React.Fragment>
+            )}
+          />
+        </Switch>
+      </div>
+    </Router>
   );
 }
 
