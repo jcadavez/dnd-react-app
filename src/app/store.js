@@ -6,8 +6,8 @@ import traitReducer from '../features/trait/traitSlice'
 
 export default configureStore({
     reducer: {
-        races: raceReducer,
-        classes: classReducer,
-        traits: traitReducer
+        race: raceReducer,
+        class: classReducer,
+        trait: traitReducer
     }
 })

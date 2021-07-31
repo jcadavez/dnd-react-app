@@ -2,7 +2,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 
 export const TraitList = () => {
-    const traits = useSelector(state => state.traits)
+    const traits = useSelector(state => state.trait.list)
 
     const renderedTraits = traits.map(trait => (
         <article className="trait-excerpt" key={trait.index}>

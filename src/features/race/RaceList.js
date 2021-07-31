@@ -2,7 +2,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 
 export const RaceList = () => {
-    const races = useSelector(state => state.races)
+    const races = useSelector(state => state.race.list)
 
     const renderedRaces = races.map(race => (
         <article className="race-excerpt" key={race.index}>

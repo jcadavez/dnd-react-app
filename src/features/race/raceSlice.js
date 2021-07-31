@@ -1,20 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = [
-    {
-        "index" : "chocolate",
-        "name"  : "Chocolate",
-        "url"   : "/api/races/chocolate"
-    },
-    {
-        "index" : "vanilla",
-        "name"  : "Vanilla",
-        "url"   : "/api/races/vanilla"
-    }
-]
+const initialState = {
+    list: [
+        {
+            "index" : "chocolate",
+            "name"  : "Chocolate",
+            "url"   : "/api/races/chocolate"
+        },
+        {
+            "index" : "vanilla",
+            "name"  : "Vanilla",
+            "url"   : "/api/races/vanilla"
+        }
+    ],
+    status: 'idle',
+    error: null
+}
 
 const raceSlice = createSlice({
-    name: 'race',
+    name: 'races',
     initialState,
     reducers: {}
 })

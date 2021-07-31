@@ -2,7 +2,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 
 export const ClassList = () => {
-    const classes = useSelector(state => state.classes)
+    const classes = useSelector(state => state.class.list)
 
     const renderedClasses = classes.map(classVal => (
         <article className="class-excerpt" key={classVal.index}>
