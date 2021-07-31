@@ -8,6 +8,8 @@ import {
 
 import './App.css';
 
+import { Navbar } from './app/Navbar'
+
 import { ClassList } from './features/class/ClassList'
 import { RaceList } from './features/race/RaceList'
 import { TraitList } from './features/trait/TraitList'
@@ -15,6 +17,7 @@ import { TraitList } from './features/trait/TraitList'
 function App() {
   return (
     <Router>
+      <Navbar />
       <div className="App">
         <Switch>
           <Route 
