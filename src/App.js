@@ -25,9 +25,11 @@ function App() {
             path="/"
             render={() => (
               <React.Fragment>
-                <ClassList />
-                <RaceList />
-                <TraitList />
+                <div class="flexbox-container">
+                  <ClassList />
+                  <RaceList />
+                  <TraitList />
+                </div>
               </React.Fragment>
             )}
           />
