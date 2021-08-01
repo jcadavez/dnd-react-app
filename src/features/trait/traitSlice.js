@@ -17,7 +17,7 @@ const initialState = {
     error: null
 }
 
-export const fetchTraits = createAsyncThunk('app/fetchraces', async () => {
+export const fetchTraits = createAsyncThunk('traits/fetchtraits', async () => {
     let { results } = await fetch('https://www.dnd5eapi.co/api/traits')
         .then(response => response.json());
     return { results: results };
