@@ -1,9 +1,19 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
+import { resetSingleTraitStatus } from './traitSlice'
+
 export const TraitList = () => {
-    const traits = useSelector(state => state.trait.list)
+    const dispatch = useDispatch();
+    const traits = useSelector(state => state.traits.list)
+    const traitStatus = useSelector(state => state.traits.resetSingleTraitStatus)
+
+    useEffect(() => {
+        if (traitStatus !== 'idle') {
+            dispatch(resetSingleTraitStatus())
+        }
+    }, [traitStatus, dispatch])
 
     const renderedTraits = traits.map(trait => (
         <article className="trait-excerpt" key={trait.index}>

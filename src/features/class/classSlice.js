@@ -1,6 +1,16 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+    selected: {
+        "index" : "loading",
+        "name" : "Loading",
+        "hit_die" : 0,
+        "proficiency_choices" : [],
+        "proficiencies" : [],
+        "saving_throws" : [],
+        "starting_equipment" : [],
+        "starting_equipment_options" : []
+    },
     list: [
         {
             "index" : "poor",
@@ -14,6 +24,7 @@ const initialState = {
         }
     ],
     status: 'idle',
+    singlestatus: 'idle',
     error: null
 }
 
@@ -23,10 +34,20 @@ export const fetchClasses = createAsyncThunk('classes/fetchclasses', async () =>
     return { results: results };
 })
 
+export const fetchSingleClass = createAsyncThunk('classes/fetchsingleclass', async (url) => {
+    let classVal = await fetch(`https://www.dnd5eapi.co/api/classes/${url}`)
+        .then(response => response.json())
+    return { classVal : classVal }
+})
+
 const classSlice = createSlice({
     name: 'classes',
     initialState,
-    reducers: {},
+    reducers: {
+        resetSingleClassStatus(state, action) {
+            state.singlestatus = 'idle'
+        }
+    },
     extraReducers: {
         [fetchClasses.pending]: (state, action) => {
             state.status = 'loading'
@@ -45,8 +66,22 @@ const classSlice = createSlice({
         [fetchClasses.rejected]: (state, action) => {
             state.status = 'failed'
             state.error = action.error.message
+        },
+        [fetchSingleClass.pending]: (state, action) => {
+            state.singlestatus = 'loading'
+        },
+        [fetchSingleClass.fulfilled]: (state,action) => {
+            state.singlestatus = 'succeeded'
+            let { classVal } = action.payload 
+            state.selected = classVal
+        },
+        [fetchSingleClass.rejected]: (state, action) => {
+            state.singlestatus = 'failed'
+            state.error = action.error.message
         }
     }
 })
+
+export const { resetSingleClassStatus } = classSlice.actions
 
 export default classSlice.reducer

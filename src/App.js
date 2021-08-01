@@ -14,6 +14,10 @@ import { ClassList } from './features/class/ClassList'
 import { RaceList } from './features/race/RaceList'
 import { TraitList } from './features/trait/TraitList'
 
+import { SingleRacePage } from './features/race/SingleRacePage'
+import { SingleClassPage } from './features/class/SingleClassPage'
+import { SingleTraitPage } from './features/trait/SingleTraitPage'
+
 function App() {
   return (
     <Router>
@@ -33,6 +37,10 @@ function App() {
               </React.Fragment>
             )}
           />
+          <Route exact path="/races/:raceUrl" component={SingleRacePage} />
+          <Route exact path="/classes/:classUrl" component={SingleClassPage} />
+          <Route exact path="/traits/:traitUrl" component={SingleTraitPage} />
+          <Redirect to="/" />
         </Switch>
       </div>
     </Router>

@@ -1,13 +1,24 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+import React, { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 
+import { resetSingleRaceStatus } from './raceSlice'
+
 export const RaceList = () => {
-    const races = useSelector(state => state.race.list)
+    const dispatch = useDispatch();
+    const races = useSelector(state => state.races.list)
+    
+    const raceStatus = useSelector(state => state.races.singlestatus);
+    
+    useEffect(() => {
+        if (raceStatus !== 'idle') {
+            dispatch(resetSingleRaceStatus())
+        }
+    }, [raceStatus, dispatch])
 
     const renderedRaces = races.map(race => (
         <article className="race-excerpt" key={race.index}>
-            <Link to={race.url}>
+            <Link to={`/races/${race.url}`}>
                 <h3>{race.name}</h3>
             </Link>
         </article>

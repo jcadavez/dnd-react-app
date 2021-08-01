@@ -1,6 +1,14 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+    selected: {
+        "index" : "loading",
+        "name" : "Loading",
+        "races" : [],
+        "subraces" : [],
+        "desc" : ["loading"],
+        "proficiencies" : []
+    },
     list: [
         {
             "index" : "good",
@@ -14,6 +22,7 @@ const initialState = {
         }
     ],
     status: 'idle',
+    singlestatus: 'idle',
     error: null
 }
 
@@ -23,10 +32,20 @@ export const fetchTraits = createAsyncThunk('traits/fetchtraits', async () => {
     return { results: results };
 })
 
+export const fetchSingleTrait = createAsyncThunk('traits/fetchsingletrait', async (url) => {
+    let trait = await fetch(`https://www.dnd5eapi.co/api/traits/${url}`)
+        .then(response => response.json())
+    return { trait: trait }
+})
+
 const traitSlice = createSlice({
     name: 'traits',
     initialState,
-    reducers: {},
+    reducers: {
+        resetSingleTraitStatus(state, action) {
+            state.singlestatus = 'idle'
+        }
+    },
     extraReducers: {
         [fetchTraits.pending]: (state, action) => {
             state.status = 'loading'
@@ -45,8 +64,22 @@ const traitSlice = createSlice({
         [fetchTraits.rejected]: (state, action) => {
             state.status = 'failed'
             state.error = action.error.message
+        },
+        [fetchSingleTrait.pending]: (state, action) => {
+            state.singlestatus = 'loading'
+        },
+        [fetchSingleTrait.fulfilled]: (state, action) => {
+            state.singlestatus = 'succeeded'
+            let { trait } = action.payload 
+            state.selected = trait
+        },
+        [fetchSingleTrait.rejected]: (state, action) => {
+            state.singlestatus = 'failed'
+            state.error = action.error
         }
     }
 })
+
+export const { resetSingleTraitStatus } = traitSlice.actions
 
 export default traitSlice.reducer
